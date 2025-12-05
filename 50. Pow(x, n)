@@ -1,0 +1,22 @@
+class Solution {
+    public double power(double x, long pow) {
+        if(pow == 1) return x;
+
+        if(pow%2 == 0)
+        return power(x*x, pow/2);
+
+        return x*power(x, pow-1);
+    }
+    
+    public double myPow(double x, int n) {
+        if(n==0) return 1.0;
+
+        long N = n;
+        if(N < 0) {
+            return 1.00/power(x, -N);
+        }
+        else {
+            return power(x, N);
+        }
+    }
+}
