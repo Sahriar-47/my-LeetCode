@@ -1,0 +1,16 @@
+class Solution {
+    private static void recur(Stack<Integer> st, Stack<Integer> newSt) {
+        if(st.isEmpty()) return;
+        
+        int top = st.pop();
+        newSt.push(top);
+        
+        recur(st, newSt);
+    }
+    public static void reverseStack(Stack<Integer> st) {
+        // code here
+        Stack<Integer> newSt = new Stack<>();
+        recur(st, newSt);
+        st.addAll(newSt);
+    }
+}
