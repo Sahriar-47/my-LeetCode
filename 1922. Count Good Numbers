@@ -1,0 +1,19 @@
+class Solution {
+    private int mod = (int)1e9+7;
+
+     public long power(long x, long pow) {
+        if(pow == 0) return 1;
+
+        long val = power(x, pow/2);
+        val = (val*val) % mod;
+
+        if(pow%2 == 0)
+        return val;
+
+        return (x*val) % mod;
+    }
+    public int countGoodNumbers(long n) {
+        long result =(power(5, (n+1)/2) *power(4, n/2)) % mod;
+        return (int)result;
+    }
+}
