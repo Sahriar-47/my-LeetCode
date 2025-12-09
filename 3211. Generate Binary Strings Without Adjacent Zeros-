@@ -1,0 +1,21 @@
+class Solution {
+    private void generateString(int n, String s, List<String> ls) {
+        if(n == s.length()) {
+            ls.add(s);
+            return;
+        }
+
+        generateString(n, s+"1", ls);
+
+        if(s.isEmpty() || s.charAt(s.length()-1) != '0')
+        generateString(n, s+"0", ls);
+    }
+    
+
+    public List<String> validStrings(int n) {
+        List<String> ls = new ArrayList<>();
+
+        generateString(n, "", ls);
+        return ls;
+    }
+}
