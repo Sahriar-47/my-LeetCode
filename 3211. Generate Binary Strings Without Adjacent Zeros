@@ -1,0 +1,37 @@
+class Solution {
+    private void generateString(int ind, int n, StringBuilder sb, List<String> ls) {
+        if(ind == n) {
+            ls.add(sb.toString());
+            return;
+        }
+
+        if(sb.charAt(ind-1) == '0') {
+            sb.append('1');
+            generateString(ind+1, n, sb, ls);
+            sb.deleteCharAt(sb.length()-1);
+        }
+        else {
+            sb.append('0');
+            generateString(ind+1, n, sb, ls);
+            sb.deleteCharAt(sb.length()-1);
+
+            sb.append('1');
+            generateString(ind+1, n, sb, ls);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+    
+
+    public List<String> validStrings(int n) {
+        List<String> ls = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        sb.append('0');
+
+        generateString(1, n, sb, ls);
+
+        sb.setLength(0);
+        sb.append('1');
+        generateString(1, n, sb, ls);
+        return ls;
+    }
+}
