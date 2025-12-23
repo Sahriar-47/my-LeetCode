@@ -1,0 +1,23 @@
+class Solution {
+    private void recur(int ind, String cur, int len, List<String> ans, String digits, String[] mp) {
+        if(ind == len) {
+            ans.add(cur);
+            return;
+        }
+
+        String s = mp[digits.charAt(ind)-'0'];
+
+        for(int i=0; i<s.length(); i++) {
+            recur(ind+1, cur+s.charAt(i), len, ans, digits, mp);
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        int len = digits.length();
+        
+        List<String> ans = new ArrayList<>();
+        String[] mp = new String[] {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+        recur(0, "", len, ans, digits, mp);
+        return ans;
+    }
+}
