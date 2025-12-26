@@ -1,0 +1,36 @@
+class Solution {
+    private void recur(String s, List<String> cur, List<List<String>> res) {
+        if(s == null || s.length() == 0) {
+            res.add(new ArrayList<>(cur));
+            return;
+        }
+
+        for(int i=1; i<=s.length(); i++) {
+            String tem = s.substring(0, i);
+
+            if(!isPalindrom(tem)) continue;
+            cur.add(tem);
+            recur(s.substring(i, s.length()), cur, res);
+            cur.remove(cur.size()-1);
+        }
+    }
+    private Boolean isPalindrom(String tem) {
+        int left = 0;
+        int right = tem.length()-1;
+        while(left <= right) {
+            if(tem.charAt(left) != tem.charAt(right))
+            return false;
+            else
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public List<List<String>> partition(String s) {
+        int len = s.length();
+
+        List<List<String>> res = new ArrayList<>();
+        recur(s, new ArrayList<>(), res);
+        return res;
+    }
+}
