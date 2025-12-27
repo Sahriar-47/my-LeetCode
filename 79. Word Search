@@ -1,0 +1,43 @@
+class Solution {
+    int dx[] = {-1, 1, 0, 0};
+    int dy[] = {0, 0, -1, 1};
+    private Boolean isValid(int row, int col, int n, int m) {
+        if(row>=0 && row<n && col>=0 && col<m)
+        return true;
+        return false;
+    }
+
+    private Boolean dfs(int row, int col, char[][] board, String word, int ind, int[][] vis, int n, int m) {
+        if(ind == word.length()) {
+            return true;
+        }
+
+        vis[row][col] = 1;
+        for(int i=0; i<4; i++) {
+            int new_row = row+dx[i];
+            int new_col = col+dy[i];
+            if(isValid(new_row, new_col, n, m) && vis[new_row][new_col] == 0 && board[new_row][new_col] == word.charAt(ind)) {
+                if(dfs(new_row, new_col, board, word, ind+1, vis, n, m))
+                return true;
+            }
+        }
+        vis[row][col] = 0;
+        return false;
+    }
+
+    public boolean exist(char[][] board, String word) {
+        int n = board.length;
+        int m = board[0].length;
+
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(board[i][j] == word.charAt(0)) {
+                    if(dfs(i, j, board, word, 1, new int[n][m], n, m)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
