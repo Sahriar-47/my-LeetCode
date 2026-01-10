@@ -1,0 +1,29 @@
+class Solution {
+    private int solve(int curDay, int len, int[] days, int[] costs, int[] dp, HashSet<Integer> isPresentDay) {
+        if(curDay > days[len-1]) {
+            return 0;
+        }
+        if(!isPresentDay.contains(curDay)) {
+            return solve(curDay+1, len, days, costs, dp, isPresentDay);
+        }
+        if(dp[curDay] != -1) return dp[curDay];
+
+        int cost1 = costs[0] + solve(curDay+1, len, days, costs, dp, isPresentDay);
+        int cost7 = costs[1] + solve(curDay+7, len, days, costs, dp, isPresentDay);
+        int cost30 = costs[2] + solve(curDay+30, len, days, costs, dp, isPresentDay);
+
+        return dp[curDay] = Math.min(cost1, Math.min(cost7, cost30));
+    }
+
+    public int mincostTickets(int[] days, int[] costs) {
+        int len = days.length;
+        HashSet<Integer> isPresentDay = new HashSet<>();
+        for(int day: days) {
+            isPresentDay.add(day);
+        }
+        int[] dp = new int[days[len-1]+1];
+        Arrays.fill(dp, -1);
+
+        return solve(1, len, days, costs, dp, isPresentDay);
+    }
+}
