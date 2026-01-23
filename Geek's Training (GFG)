@@ -1,0 +1,36 @@
+class Solution {
+    private int solve(int day, int prevAct, int[][] mat, int[][] dp) {
+        if(day == 0) {
+            int mx = 0;
+            for(int i=0; i<3; i++) {
+                if(prevAct != i) {
+                    mx = Math.max(mx, mat[day][i]);
+                }
+            }
+            return dp[day][prevAct] = mx;
+        }
+         
+        if(dp[day][prevAct] != -1) {
+            return dp[day][prevAct];
+        }
+        
+        int mx = 0;
+        for(int i=0; i<3; i++) {
+            if(prevAct != i) {
+                int points = mat[day][i] + solve(day-1, i, mat, dp);
+                mx = Math.max(mx, points);
+            }
+        }
+        return dp[day][prevAct] = mx;
+    }
+    public int maximumPoints(int mat[][]) {
+        // code here
+        int len = mat.length;
+        
+        int[][] dp = new int[len][4];
+        for(int i=0; i<len; i++)
+            Arrays.fill(dp[i], -1);
+        
+        return solve(len-1, 3, mat, dp);
+    }
+}
