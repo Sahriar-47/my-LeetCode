@@ -1,0 +1,35 @@
+class Solution {
+    public int[] rotateElements(int[] nums, int k) {
+        int n = nums.length;
+        List<Integer> rot = new ArrayList<>();
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (nums[i] >= 0) {
+                rot.add(nums[i]);
+            }
+        }
+
+        Collections.reverse(rot);
+
+        int len = rot.size();
+        if (len <= 1) return nums;
+
+        k %= len;
+
+        List<Integer> temp = new ArrayList<>(Collections.nCopies(len, 0));
+
+        for (int i = 0; i < len; i++) {
+            int ind = (i - k + len) % len;
+            temp.set(ind, rot.get(i));
+        }
+
+        int j = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] >= 0) {
+                nums[i] = temp.get(j++);
+            }
+        }
+
+        return nums;
+    }
+}
