@@ -1,0 +1,62 @@
+class Pair {
+    int first;
+    int second;
+    Pair(int first, int second) {
+        this.first = first;
+        this.second = second;
+    }
+}
+
+class Solution {
+
+    private int[] bfs(int n, int src, List<List<Integer>> adj) {
+        int[] dist = new int[n];
+        Arrays.fill(dist, (int) 1e9);
+
+        Queue<Integer> q = new LinkedList<>();
+        dist[src] = 0;
+        q.add(src);
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+
+            for (int child : adj.get(node)) {
+                if (dist[node] + 1 < dist[child]) {
+                    dist[child] = dist[node] + 1;
+                    q.add(child);
+                }
+            }
+        }
+        return dist;
+    }
+
+    public int specialNodes(int n, int[][] edges, int x, int y, int z) {
+
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+
+        for (int[] e : edges) {
+            adj.get(e[0]).add(e[1]);
+            adj.get(e[1]).add(e[0]);
+        }
+
+        int[] dx = bfs(n, x, adj);
+        int[] dy = bfs(n, y, adj);
+        int[] dz = bfs(n, z, adj);
+
+        int ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            int[] arr = {dx[i], dy[i], dz[i]};
+            Arrays.sort(arr);
+
+            int left = arr[0] * arr[0] + arr[1] * arr[1];
+            int right = arr[2] * arr[2];
+
+            if (left == right) ans++;
+        }
+
+        return ans;
+    }
+}
+©leetcode
