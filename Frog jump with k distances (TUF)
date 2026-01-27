@@ -1,0 +1,27 @@
+class Solution {
+    private int solve(int ind, int k, int[] ar, int[] dp) {
+        if(ind == 0) {
+            return 0;
+        }
+
+        if(dp[ind] != -1) return dp[ind];
+
+        int mn = (int) 1e9;
+        for(int l=1; l<=k; l++) {
+            if(ind-l >= 0) {
+                mn = Math.min(mn, Math.abs(ar[ind]-ar[ind-l]) + solve(ind-l, k, ar, dp));
+            }
+        }
+
+        return dp[ind] = mn;
+    }
+
+    public int frogJump(int[] heights, int k) {
+        int n = heights.length;
+
+        int [] dp = new int[n];
+        Arrays.fill(dp, -1);
+
+        return solve(n-1, k, heights, dp);
+    }
+}
