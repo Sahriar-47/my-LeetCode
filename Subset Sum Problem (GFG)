@@ -1,0 +1,39 @@
+class Solution {
+    private static boolean solve(int ind, int target, int[] arr, int[][] dp) {
+        if(target == 0) {
+            return true;
+        }
+        if(ind == 0) {
+            return arr[0] == target;
+        }
+        
+        if(dp[ind][target] != -1) {
+            if(dp[ind][target] == 1)
+            return true;
+            else
+            return false;
+        }
+        
+        boolean notPick = solve(ind-1, target, arr, dp);
+        
+        boolean pick = false;
+        if(target - arr[ind] >= 0)
+        pick = solve(ind-1, target - arr[ind], arr, dp);
+        
+        dp[ind][target] = (pick | notPick)? 1:0;
+        
+        return pick | notPick;
+    }
+
+    static Boolean isSubsetSum(int arr[], int sum) {
+        // code here
+        int n = arr.length;
+        
+        int[][] dp = new int[n][sum+1];
+        for(int[] ar: dp) {
+            Arrays.fill(ar, -1);
+        }
+        
+        return solve(n-1, sum, arr, dp);
+    }
+}
