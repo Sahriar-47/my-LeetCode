@@ -1,0 +1,28 @@
+class Solution {
+    private int solve(int ind, int cur, int amount, int[] coins, int[][] dp) {
+        if(cur == amount) return 1;
+
+        if(ind < 0 || cur > amount) {
+            return 0;
+        }
+
+        if(dp[ind][cur] != -1) return dp[ind][cur];
+
+        int pick = 0;
+        if(cur < amount)
+        pick = solve(ind, cur+coins[ind], amount, coins, dp);
+
+        int notPick = solve(ind-1, cur, amount, coins, dp);
+        
+        return dp[ind][cur] = pick+notPick;
+    }
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+
+        int[][] dp = new int[n][amount+1];
+        for(int[] arr: dp)
+        Arrays.fill(arr, -1);
+
+        return solve(n-1, 0, amount, coins, dp);
+    }
+}
