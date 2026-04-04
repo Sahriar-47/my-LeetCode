@@ -1,22 +1,42 @@
 class Solution {
+    public void reverse(int[] arr, int beg, int end) {
+        while(beg < end) {
+            int temp = arr[beg];
+            arr[beg] = arr[end];
+            arr[end] = temp;
+            beg++;
+            end--;
+        }
+    }
     public void rotate(int[] nums, int k) {
-        int n = nums.length;
-        int[] arr = new int[n];
+        int len = nums.length;
+        k %= len;
 
-        int j = 0;
-        int seg = n-(k%n);
-        for(int i=seg; i<n; i++) {
-            arr[j] = nums[i];
-            j++;
-        }
+        reverse(nums, 0, len-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, len-1);
 
-        for(int i=0; i<seg; i++) {
-            arr[j] = nums[i];
-            j++;
-        }
 
-        for(int i=0; i<n; i++) {
-            nums[i] = arr[i];
-        }
+
+
+// **** Another solution:
+        // int n = nums.length;
+        // int[] arr = new int[n];
+
+        // int j = 0;
+        // int seg = n-(k%n);
+        // for(int i=seg; i<n; i++) {
+        //     arr[j] = nums[i];
+        //     j++;
+        // }
+
+        // for(int i=0; i<seg; i++) {
+        //     arr[j] = nums[i];
+        //     j++;
+        // }
+
+        // for(int i=0; i<n; i++) {
+        //     nums[i] = arr[i];
+        // }
     }
 }
