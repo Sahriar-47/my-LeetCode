@@ -1,0 +1,30 @@
+class Solution {
+    int maxLength(int arr[]) {
+        // code here
+        int n = arr.length;
+        
+        int[] preSum = new int[n+1];
+        preSum[0] = 0;
+        for(int i=1; i<n+1; i++) {
+            preSum[i] = preSum[i-1] + arr[i-1];
+        }
+        
+        Map<Integer, Integer> mp = new HashMap<>();
+        int res = 0;
+        for(int i=1; i<n+1; i++) {
+            if(preSum[i] == 0) {
+                res = i;
+            }
+            
+            if(mp.containsKey(preSum[i])) {
+                res = Math.max(res, i-mp.get(preSum[i]));
+            }
+            
+            if(!mp.containsKey(preSum[i])) {
+                mp.put(preSum[i], i);
+            }
+        }
+        
+        return res;
+    }
+}
