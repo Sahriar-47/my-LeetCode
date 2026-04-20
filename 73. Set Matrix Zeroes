@@ -1,0 +1,67 @@
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(matrix[i][j] == 0) {
+                    for(int l=0; l<m; l++) {
+                        if(matrix[i][l] != 0)
+                        matrix[i][l] = (int)1e9+7;
+                    }
+                    for(int r=0; r<n; r++) {
+                        if(matrix[r][j] != 0)
+                        matrix[r][j] = (int)1e9+7;
+                    }
+                }
+            }
+        }
+
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(matrix[i][j] == (int)1e9+7) 
+                matrix[i][j] = 0;
+            }
+        }
+    }
+}
+
+
+
+// class Solution {
+//     class Pair {
+//         int first;
+//         int second;
+//         public Pair(int first, int second) {
+//             this.first = first;
+//             this.second = second;
+//         }
+//     }
+
+//     public void setZeroes(int[][] matrix) {
+//         int n = matrix.length;
+//         int m = matrix[0].length;
+
+//         List<Pair> lp = new ArrayList<>();
+//         for(int i=0; i<n; i++) {
+//             for(int j=0; j<m; j++) {
+//                 if(matrix[i][j] == 0) {
+//                     lp.add(new Pair(i, j));
+//                 }
+//             }
+//         }
+
+//         for(int li=0; li<lp.size(); li++) {
+//             int row = lp.get(li).first;
+//             int col = lp.get(li).second;
+
+//             for(int i=0; i<m; i++) {
+//                 matrix[row][i] = 0;
+//             }
+//             for(int j=0; j<n; j++) {
+//                 matrix[j][col] = 0;
+//             }
+//         }
+//     }
+// }
